@@ -6,12 +6,47 @@ class Node:
         self.next = None  # 다음 노드에 대한 레퍼런스
 
 
-class  LinkedList:
+class LinkedList:
     """링크드 리스트 클래스"""
 
     def __init__(self):
         self.head = None
         self.tail = None
+
+    def delete_after(self, previous_node):
+        """링크드 리스트 삭제연산. 주어진 노드 뒤 노드를 삭제한다"""
+        data = previous_node.next.data
+
+        # 지우려는 노드가 tail 노드일 때
+        if previous_node.next is self.tail:
+            previous_node.next = None
+            self.tail = previous_node
+        # 두 노드 사이 노드를 지울 때
+        else:
+            previous_node.next = previous_node.next.next
+
+        return data
+
+    def insert_after(self, previous_node, data):
+        """링크드 리스트 주어진 노드 뒤 삽입 연산 메소드"""
+        new_node = Node(data)
+
+        # 가장 마지막 순서 삽입
+        if previous_node is self.tail:
+            self.tail.next = new_node
+            self.tail = new_node
+        else:  # 두 노드 사이에 삽입
+            new_node.next = previous_node.next
+            previous_node.next = new_node
+
+    def find_node_at(self, index):
+        """링크드 리스트 접근 연산 메소드. 파라미터 인덱스는 항상 있다고 가정"""
+        iterator = self.head
+
+        for _ in range(index):
+            iterator = iterator.next
+
+        return iterator
 
     def append(self, data):
         """링크드 리스트 추가 연산 메소드"""
@@ -51,3 +86,9 @@ my_list.append(7)
 my_list.append(11)
 
 print(my_list)
+
+node_2 = my_list.find_node_at(2)  # 인덱스 2 노드 접근
+my_list.delete_after(node_2)  # 인덱스 2 뒤 데이터 삭제
+
+print(my_list)
+
