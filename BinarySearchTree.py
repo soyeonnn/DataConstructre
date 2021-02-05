@@ -20,7 +20,24 @@ class BinarySearchTree:
     def __init__(self):
         self.root = None
 
+    def search(self, data):
+        """이진 탐색 트리 탐색 메소드, 찾는 데이터를 갖는 노드가 없으면 None 을 리턴한다"""
+        compare_node = self.root
+
+        # 원하는 데이터를 갖는 노드를 찾을 때까지 돈다
+        while compare_node is not None:
+            # 원하는 데이터를 갖는 노드를 찾으면 리턴
+            if compare_node.data == data:
+                return compare_node
+            # 원하는 데이터가 노드의 데이터보다 작으면 왼쪽 자식 노드로 간다
+            elif compare_node.data > data:
+                compare_node = compare_node.left_child
+            # 원하는 데이터가 노드의 데이터보다 크면 오른쪽 자식 노드로 간다
+            else:
+                compare_node = compare_node.right_child
+
     def insert(self, data):
+        """이진 탐색 트리 삽입 메소드"""
         new_node = Node(data)  # 삽입할 데이터를 갖는 새 노드 생성
 
         # 트리가 비었으면 새로운 노드를 root 노드로 만든다
@@ -69,5 +86,8 @@ bst.insert(2)
 bst.insert(4)
 bst.insert(14)
 
-# 이진 탐색 트리 출력
-bst.print_sorted_tree()
+# 노드 탐색과 출력
+print(bst.search(7).data)
+print(bst.search(19).data)
+print(bst.search(2).data)
+print(bst.search(20))
