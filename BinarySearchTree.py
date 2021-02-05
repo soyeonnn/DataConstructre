@@ -35,7 +35,34 @@ class BinarySearchTree:
                     parent_node.left_child = None
                 else:
                     parent_node.right_child = None
-        
+
+        # 경우 2: 지우려는 노드가 자식이 하나인 노드일 때:
+        # 삭제하려는 노드에 오른쪽 자식만 있는 경우
+        elif node_to_delete.left_child is None:
+            # 삭제하려는 노드가 root 노드일 때
+            if node_to_delete is self.root:
+                self.root = node_to_delete.right_child
+                self.root.parent = None
+            # 삭제하려는 노드가 부모 노드의 오른쪽 자식인 경우
+            elif node_to_delete is parent_node.right_child:
+                parent_node.right_child = node_to_delete.right_child
+                node_to_delete.right_child.parent = parent_node
+            else:  # 삭제하려는 노드가 부모 노드의 왼쪽 자식인 경우
+                parent_node.left_child = node_to_delete.right_child
+                node_to_delete.right_child.parent = parent_node
+        # 삭제하려는 노드에 왼쪽 자식만 있는 경우
+        elif node_to_delete.right_child is None:
+            # 삭제하려는 노드가 root 노드일 때
+            if node_to_delete is self.root:
+                self.root = node_to_delete.left_child
+                self.root.parent = None
+            # 삭제하려는 노드가 부모 노드의 왼쪽 자식인 경우
+            if node_to_delete is parent_node.left_child:
+                parent_node.left_child = node_to_delete.left_child
+                node_to_delete.left_child.parent = parent_node
+            else:  # 삭제하려는 노드가 부모 노드의 오른쪽 자식인 경우
+                parent_node.right_child = node_to_delete.left_child
+                node_to_delete.left_child.parent = parent_node
 
     @staticmethod
     def find_min(node):
@@ -115,8 +142,8 @@ bst.insert(2)
 bst.insert(4)
 bst.insert(14)
 
-# leaf 노드 삭제
-bst.delete(2)
-bst.delete(4)
+# 자식이 하나만 있는 노드 삭제
+bst.delete(5)
+bst.delete(9)
 
 bst.print_sorted_tree()
