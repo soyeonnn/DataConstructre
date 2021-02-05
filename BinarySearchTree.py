@@ -20,6 +20,16 @@ class BinarySearchTree:
     def __init__(self):
         self.root = None
 
+    @staticmethod
+    def find_min(node):
+        """(부분)이진 탐색 트리의 가장 작은 노드 리턴"""
+        temp_node = node
+
+        while temp_node.left_child is not None:
+            temp_node = temp_node.left_child
+
+        return temp_node
+
     def search(self, data):
         """이진 탐색 트리 탐색 메소드, 찾는 데이터를 갖는 노드가 없으면 None 을 리턴한다"""
         compare_node = self.root
@@ -86,8 +96,5 @@ bst.insert(2)
 bst.insert(4)
 bst.insert(14)
 
-# 노드 탐색과 출력
-print(bst.search(7).data)
-print(bst.search(19).data)
-print(bst.search(2).data)
-print(bst.search(20))
+print(bst.find_min(bst.root).data)  # 전체 이진 탐색 트리에서 가장 작은 노드
+print(bst.find_min(bst.root.right_child).data)  # root 노드의 오른쪽 부분 트리에서 가장 작은 노드
