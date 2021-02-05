@@ -64,6 +64,21 @@ class BinarySearchTree:
                 parent_node.right_child = node_to_delete.left_child
                 node_to_delete.left_child.parent = parent_node
 
+        # 경우 3: 지우려는 노드가 2개의 자식이 있을 때
+        else:
+            # 지우려는 노드의 successor 받아오기
+            successor = self.find_min(node_to_delete.right_child)
+            # 삭제하려는 노드 데이터에 successor 데이터 저장
+            node_to_delete.data = successor.data
+            # successor 삭제
+            if successor is successor.parent.left_child:  # successor 노드가 어떤 부모 노드의 왼쪽 자식일 때
+                successor.parent.left_child = successor.right_child
+            else:  # successor 노드가 삭제하려는 노드의 바로 오른쪽 자식일 때
+                successor.parent.right_child = successor.right_child
+
+            if successor.right_child is not None:  # successor 노드가 오른쪽 자식이 있을 떄
+                successor.right_child.parent = successor.parent
+
     @staticmethod
     def find_min(node):
         """(부분)이진 탐색 트리의 가장 작은 노드 리턴"""
@@ -142,8 +157,8 @@ bst.insert(2)
 bst.insert(4)
 bst.insert(14)
 
-# 자식이 하나만 있는 노드 삭제
-bst.delete(5)
-bst.delete(9)
+# 자식이 두 개 다 있는 노드 삭제
+bst.delete(7)
+bst.delete(11)
 
 bst.print_sorted_tree()
