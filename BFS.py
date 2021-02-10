@@ -1,5 +1,5 @@
 from collections import deque
-from SubwayGraph import create_station_graph
+from SubwayGraphBFS import create_station_graph
 
 
 def bfs(graph, start_node):
